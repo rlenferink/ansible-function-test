@@ -1,0 +1,3 @@
+{% merge_macro(suffix, initial_value=[]) -%}
+  {{ (lookup('vars', *query('varnames', '^.+' + suffix + '$')) + [initial_value]) | flatten(levels=1) }}
+{%- endmacro %}

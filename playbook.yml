@@ -12,13 +12,15 @@
     a__bar_list: ["bar1", "bar2"]
     b__bar_list: ["bar3", "bar4"]
 
-    _foo_merged: "{{ (lookup('vars', *query('varnames', '^.+__foo_list$')) + [foo_initial_value]) | flatten(levels=1) }}"
+    #_foo_merged: "{{ (lookup('vars', *query('varnames', '^.+__foo_list$')) + [foo_initial_value]) | flatten(levels=1) }}"
+    #_foo_merged: "{% import 'merge_macro.j2' %}{{ merge_macro('__foo_list', foo_initial_value) }}"
     _bar_merged: "{{ (lookup('vars', *query('varnames', '^.+__bar_list$')) + [bar_initial_value]) | flatten(levels=1) }}"
 
   tasks:
     - name: Print _foo_merged
       debug:
-        msg: "{{ _foo_merged }}"
+        msg: "{% import 'merge_macro.j2' %}{{ merge_macro('__foo_list', foo_initial_value) }}"
+        #msg: "{{ _foo_merged }}"
 
     - name: Print _bar_merged
       debug:
